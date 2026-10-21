@@ -1,0 +1,16 @@
+/* The startup stylesheet is installed at document_start, before Facebook builds its feed. */
+html:not([data-fbu-ready]) :is(main,[role="main"]),
+html:not([data-fbu-ready]) :is(main,[role="main"]) * { visibility: hidden !important; }
+html[data-fbu-guard] :is([role="main"],[role="feed"]) :is([data-pagelet^="FeedUnit_"],[role="article"]):not([data-fbu-reviewed]):not([data-fbu-reviewed] *) { visibility: hidden !important; }
+html[data-fbu-guard] :is([role="main"],[role="feed"]) :is([data-pagelet^="FeedUnit_"],[role="article"]):not([data-fbu-reviewed]):not([data-fbu-reviewed] *) * { visibility: hidden !important; }
+/* Collapse individual filtered posts; keep Facebook pagination containers intact. */
+[data-fbu-hidden="true"] { display: none !important; }
+[data-fbu-ui-hidden="true"] { display: none !important; }
+/* Reserve the left column for our panel; do not move or stretch the Facebook feed. */
+[data-fbu-sidebar="true"] { visibility: hidden !important; pointer-events: none !important; }
+
+/* Startup indicator exists before storage and the first filtering pass are ready. */
+html[data-fbu-guard]:not([data-fbu-ready])::after { content:"";position:fixed;z-index:20;top:190px;left:calc(50% - 13px);box-sizing:border-box;width:26px;height:26px;border:2px solid #0866ff30;border-top-color:#0866ff;border-right-color:#65a5ff;border-radius:50%;animation:fbu-spin 1s linear infinite;pointer-events:none; }
+@keyframes fbu-spin { to { transform:rotate(360deg); } }
+[data-fbu-loading-placeholder="true"], [data-fbu-loading-placeholder="true"] * { visibility:hidden !important; }
+@media(prefers-reduced-motion:reduce) { html[data-fbu-guard]:not([data-fbu-ready])::after { animation:none; } }

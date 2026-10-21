@@ -1,0 +1,15 @@
+node_modules/
+.DS_Store
+*.zip
+dist/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.log
+coverage/
+playwright-report/
+test-results/
+# Historic local preview, not a current store screenshot.
+docs/menu-preview.png

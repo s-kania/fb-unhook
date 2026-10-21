@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Facebook Unhook</title><link rel="stylesheet" href="popup.css"></head>
+<body>
+  <header><div class="logo" aria-hidden="true">u<span>↗</span></div><div><h1>facebook unhook</h1><p>Mniej szumu. Twoje grupy.</p></div><span class="version" id="version"></span></header>
+  <main>
+    <section id="setup" class="status-card" hidden aria-label="Pierwsze uruchomienie">
+      <strong>Zacznij od listy grup</strong>
+      <p>Filtr czeka na Twoją listę. Aktualizacja odczyta nazwy i adresy grup ze strony „Twoje grupy” i zapisze je tylko w tej przeglądarce.</p>
+      <button id="setup-sync" class="primary">Odczytaj moje grupy</button>
+      <p class="hint">Możesz też wyłączyć „Tylko moje grupy”, aby zobaczyć wszystkie posty.</p>
+    </section>
+    <section class="controls" aria-label="Ustawienia">
+      <label class="setting"><span><strong>Włącz rozszerzenie</strong><small>Spokojniejszy Facebook</small></span><input id="enabled" type="checkbox" role="switch"><span class="switch" aria-hidden="true"></span></label>
+      <label class="setting"><span><strong>Tylko moje grupy</strong><small>Filtruj posty w aktualnościach</small></span><input id="groupsOnly" type="checkbox" role="switch"><span class="switch" aria-hidden="true"></span></label>
+    </section>
+    <section class="controls" aria-label="Widok Facebooka">
+      <label class="setting"><span><strong>Ukryj pasek tworzenia posta</strong><small>Pasek „O czym myślisz?” nad aktualnościami</small></span><input id="hideComposer" type="checkbox" role="switch"><span class="switch" aria-hidden="true"></span></label>
+      <label class="setting"><span><strong>Ukryj rolki</strong><small>Rolki w aktualnościach i nawigacji</small></span><input id="hideReels" type="checkbox" role="switch"><span class="switch" aria-hidden="true"></span></label>
+      <label class="setting"><span><strong>Ukryj relacje</strong><small>Pasek relacji nad aktualnościami</small></span><input id="hideStories" type="checkbox" role="switch"><span class="switch" aria-hidden="true"></span></label>
+      <label class="setting"><span><strong>Ukryj lewy panel</strong><small>Zastąp go panelem Facebook Unhook</small></span><input id="hideSidebar" type="checkbox" role="switch"><span class="switch" aria-hidden="true"></span></label>
+      <label class="setting"><span><strong>Ukryj moje skróty</strong><small>Ukryj skróty, gdy lewy panel jest widoczny</small></span><input id="hideShortcuts" type="checkbox" role="switch"><span class="switch" aria-hidden="true"></span></label>
+      <label class="setting"><span><strong>Ukryj kontakty</strong><small>Cała sekcja po prawej wraz z jej menu</small></span><input id="hideContacts" type="checkbox" role="switch"><span class="switch" aria-hidden="true"></span></label>
+      <label class="setting"><span><strong>Ukryj przycisk wiadomości</strong><small>Nowa wiadomość w prawym dolnym rogu</small></span><input id="hideMessageButton" type="checkbox" role="switch"><span class="switch" aria-hidden="true"></span></label>
+      <label class="setting"><span><strong>Uprość górną nawigację</strong><small>Tylko Strona główna i Marketplace</small></span><input id="minimalNavigation" type="checkbox" role="switch"><span class="switch" aria-hidden="true"></span></label>
+    </section>
+    <section class="status-card"><span class="eyebrow">TERAZ NA FACEBOOKU</span><p id="status" role="status">Sprawdzam aktywną kartę…</p></section>
+    <section class="groups-section">
+      <div class="section-heading"><h2>Moje grupy <span id="count">0</span></h2><button id="sync" class="primary">↻ Aktualizuj</button></div>
+      <p id="sync-status" class="hint" role="status">Zaktualizuj listę przed pierwszym użyciem.</p>
+      <button id="cancel" class="text-button" hidden>Zatrzymaj aktualizację</button>
+      <input type="search" id="search" placeholder="Szukaj na liście grup…" aria-label="Szukaj grupy">
+      <p class="hint">Wyłącz grupę, aby ukryć jej posty. Członkostwo w grupie pozostaje bez zmian.</p>
+      <ul id="groups" aria-label="Zapisane grupy"></ul>
+      <p id="empty" class="empty">Tutaj pojawią się Twoje grupy.<br>Aktualizacja otworzy Facebooka i odczyta listę.</p>
+      <details><summary>Dodaj grupę ręcznie</summary><form id="add"><label>Link do grupy<input id="url" type="url" required placeholder="https://www.facebook.com/groups/…"></label><label>Nazwa (opcjonalnie)<input id="name" maxlength="200" placeholder="Nazwa grupy"></label><button class="secondary" type="submit">Dodaj do moich grup</button><p class="hint">Dodawaj tylko grupy, do których należysz. Aktualizacja zastąpi listę aktualnym członkostwem.</p></form></details>
+    </section>
+    <p id="error" role="alert" hidden></p>
+  </main>
+  <footer><span class="dot"></span> Ustawienia i grupy tylko na tym urządzeniu <a href="privacy.html" target="_blank" rel="noopener">Prywatność i pomoc</a></footer>
+  <script src="core.js"></script><script src="popup.js"></script>
+</body></html>
