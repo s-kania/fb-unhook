@@ -8,10 +8,10 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 EXTENSION = ROOT / 'extension'
 FILES = [
-    'manifest.json', '_locales/pl/messages.json',
+    'manifest.json', '_locales/pl/messages.json', '_locales/en/messages.json', 'i18n.js',
     'background.js', 'core.js', 'layout.js', 'post-controls.js', 'loading.js',
     'content.js', 'content.css', 'joined-data.js', 'popup.html', 'popup.js', 'popup.css',
-    'privacy.html', 'privacy.css',
+    'privacy.html', 'privacy-en.html', 'privacy.css',
     'icons/icon-16.png', 'icons/icon-32.png', 'icons/icon-48.png', 'icons/icon-128.png',
 ]
 

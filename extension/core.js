@@ -2,7 +2,7 @@
 (function (root) {
   'use strict';
   const SETTINGS = ['enabled', 'groupsOnly', 'hideReels', 'hideStories', 'hideSidebar', 'hideShortcuts', 'hideComposer', 'hideContacts', 'hideMessageButton', 'minimalNavigation'];
-  const DEFAULTS = { enabled: true, groupsOnly: true, hideReels: true, hideStories: true, hideSidebar: true, hideShortcuts: true, hideComposer: true, hideContacts: true, hideMessageButton: true, minimalNavigation: true, groups: [], disabledGroups: [], lastSync: null, sync: null };
+  const DEFAULTS = { language: 'auto', enabled: true, groupsOnly: true, hideReels: true, hideStories: true, hideSidebar: true, hideShortcuts: true, hideComposer: true, hideContacts: true, hideMessageButton: true, minimalNavigation: true, groups: [], disabledGroups: [], lastSync: null, sync: null };
   const RESERVED = new Set(['feed', 'joins', 'discover', 'create', 'notifications', 'search', 'category', 'you', 'members']);
   function groupKey(href) {
     try {

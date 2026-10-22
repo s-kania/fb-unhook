@@ -1,6 +1,8 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { JSDOM } = require('jsdom');
+globalThis.FBUnhookI18n = require('../extension/i18n.js');
+globalThis.FBUnhookI18n.setLanguage('pl');
 const L = require('../extension/loading.js');
 function fixture() {
   const dom = new JSDOM('<main role="main"><div role="feed"><div data-pagelet="FeedUnit_0" id="post"><h4>Post</h4><span role="status" aria-label="Ładowanie…"></span></div><div id="placeholder" role="status" aria-label="Ładowanie…"></div></div></main>');

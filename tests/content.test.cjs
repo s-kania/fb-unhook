@@ -9,6 +9,7 @@ test('live filtering handles newly loaded posts, recycled DOM, toggles and SPA r
   let storageChanged;
   w.chrome = { runtime: { id: 'test', sendMessage: async () => ({ tabId: 1 }), onMessage: { addListener() {} } }, storage: { local: { get: async () => ({ groups: [{ id: '123', name: 'Known' }] }) }, onChanged: { addListener: fn => { storageChanged = fn; } } } };
   try {
+    w.eval(fs.readFileSync(require.resolve('../extension/i18n.js'), 'utf8'));
     w.eval(fs.readFileSync(require.resolve('../extension/core.js'), 'utf8'));
     w.eval(fs.readFileSync(require.resolve('../extension/layout.js'), 'utf8'));
     w.eval(fs.readFileSync(require.resolve('../extension/post-controls.js'), 'utf8'));
@@ -35,7 +36,7 @@ test('startup and newly inserted posts stay invisible until classified, and grou
   w.Element.prototype.attachShadow = function(options) { const shadow = attach.call(this, options); shadows.set(this, shadow); return shadow; };
   w.chrome = { runtime: { id: 'test', onMessage: { addListener() {} }, sendMessage: async message => { sent.push(message); return { tabId: 1, ok: true }; } }, storage: { local: { get: () => new Promise(resolve => { releaseStorage = resolve; }) }, onChanged: { addListener: fn => { storageChanged = fn; } } } };
   try {
-    for (const file of ['core', 'layout', 'post-controls', 'loading', 'content']) w.eval(fs.readFileSync(require.resolve(`../extension/${file}.js`), 'utf8'));
+    for (const file of ['i18n', 'core', 'layout', 'post-controls', 'loading', 'content']) w.eval(fs.readFileSync(require.resolve(`../extension/${file}.js`), 'utf8'));
     const first = w.document.getElementById('first');
     assert.equal(w.getComputedStyle(first).visibility, 'hidden');
     releaseStorage({ groups: [{ id: '123', name: 'Group' }] }); await delay();
@@ -66,7 +67,7 @@ test('post-derived aliases reveal already loaded numeric posts after storage upd
   const w = dom.window, sent = []; let storageChanged;
   w.chrome = { runtime: { id: 'test', onMessage: { addListener() {} }, sendMessage: async message => { sent.push(message); return { tabId: 1, ok: true }; } }, storage: { local: { get: async () => ({ groups: [{ id: 'my-group', name: 'Group' }] }) }, onChanged: { addListener: fn => { storageChanged = fn; } } } };
   try {
-    for (const file of ['core', 'layout', 'post-controls', 'loading', 'content']) w.eval(fs.readFileSync(require.resolve(`../extension/${file}.js`), 'utf8'));
+    for (const file of ['i18n', 'core', 'layout', 'post-controls', 'loading', 'content']) w.eval(fs.readFileSync(require.resolve(`../extension/${file}.js`), 'utf8'));
     await delay();
     const numeric = w.document.getElementById('numeric');
     assert.equal(numeric.getAttribute('data-fbu-hidden'), 'true');
@@ -87,7 +88,7 @@ test('sync obtains fresh numeric IDs from page data matched against Your groups 
   w.HTMLElement.prototype.scrollIntoView = () => {};
   w.chrome = { runtime: { id: 'test', onMessage: { addListener() {} }, sendMessage: async message => { sent.push(message); return { tabId: 1, ok: true }; } }, storage: { local: { get: async () => ({ groups: [], sync: { tabId: 1, startedAt: 123, status: 'running' } }) }, onChanged: { addListener() {} } } };
   try {
-    for (const file of ['core', 'layout', 'post-controls', 'loading', 'content']) w.eval(fs.readFileSync(require.resolve(`../extension/${file}.js`), 'utf8'));
+    for (const file of ['i18n', 'core', 'layout', 'post-controls', 'loading', 'content']) w.eval(fs.readFileSync(require.resolve(`../extension/${file}.js`), 'utf8'));
     const data = { type: 'facebook-unhook:joined-data:v1', groups: [{ id: '987', url: 'https://www.facebook.com/groups/brand-new/' }] };
     w.dispatchEvent(new w.MessageEvent('message', { source: w, origin: 'https://evil.test', data }));
     await delay();
@@ -99,5 +100,36 @@ test('sync obtains fresh numeric IDs from page data matched against Your groups 
     assert.equal(complete.groups[0].id, '987');
     assert.equal(complete.groups[0].aliases[0], 'brand-new');
     assert.equal(complete.startedAt, 123);
+  } finally { w.close(); }
+});
+
+test('language changes update mounted sidebar, post switches and loader without changing Facebook filtering', async () => {
+  const dom = new JSDOM(`<html lang="pl"><body><nav role="navigation" aria-label="Skróty" id="sidebar"><ul><li>Menu</li></ul></nav><main role="main"><div role="feed"><div data-pagelet="FeedUnit_0" id="known"><h4><a href="/groups/123/">Known group</a></h4></div><div data-pagelet="FeedUnit_1" id="personal"><h4><a href="/person">Person</a></h4></div><div id="skeleton" role="progressbar"></div></div></main></body></html>`, { url: 'https://www.facebook.com/', runScripts: 'outside-only' });
+  const w = dom.window, d = w.document, shadows = new Map();
+  const attach = w.Element.prototype.attachShadow;
+  w.Element.prototype.attachShadow = function(options) { const shadow = attach.call(this, options); shadows.set(this, shadow); return shadow; };
+  for (const id of ['sidebar', 'skeleton']) d.getElementById(id).getBoundingClientRect = () => ({ left: 0, top: 80, bottom: 400, width: 280, height: 320 });
+  let changed;
+  w.chrome = { i18n: { getUILanguage: () => 'en-US' }, runtime: { id: 'test', onMessage: { addListener() {} }, sendMessage: async () => ({ tabId: 1 }) }, storage: { local: { get: async () => ({ groups: [{ id: '123', name: 'Known group' }], language: 'en' }) }, onChanged: { addListener: f => { changed = f; } } } };
+  try {
+    for (const file of ['i18n', 'core', 'layout', 'post-controls', 'loading', 'content']) w.eval(fs.readFileSync(require.resolve(`../extension/${file}.js`), 'utf8'));
+    await delay();
+    const panel = shadows.get(d.getElementById('facebook-unhook-panel'));
+    const control = shadows.get(d.querySelector('[data-fbu-control]'));
+    const loader = shadows.get(d.getElementById('facebook-unhook-loading'));
+    assert.match(panel.textContent, /Groups enabled: 1 of 1/);
+    assert.equal(control.querySelector('.label').textContent, 'Group');
+    assert.equal(loader.querySelector('[role=status]').getAttribute('aria-label'), 'Loading posts. Posts loaded: 2');
+    changed({ language: { newValue: 'pl' } }, 'local'); await delay();
+    assert.match(panel.textContent, /1 z 1 grup włączonych/);
+    assert.equal(control.querySelector('.label').textContent, 'Grupa');
+    assert.match(control.querySelector('button').title, /Ukryj wszystkie posty/);
+    assert.equal(loader.querySelector('[role=status]').getAttribute('aria-label'), 'Ładowanie postów. Załadowane posty: 2');
+    assert.equal(d.getElementById('known').hasAttribute('data-fbu-hidden'), false);
+    assert.equal(d.getElementById('personal').hasAttribute('data-fbu-hidden'), true);
+    assert.equal(d.documentElement.lang, 'pl');
+    changed({ language: { newValue: 'auto' } }, 'local'); await delay();
+    assert.equal(control.querySelector('.label').textContent, 'Group');
+    assert.match(panel.textContent, /Groups enabled: 1 of 1/);
   } finally { w.close(); }
 });

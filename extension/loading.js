@@ -1,5 +1,6 @@
 (() => {
   'use strict';
+  const I = globalThis.FBUnhookI18n, t = I.t;
   const skeletons = doc => [...(doc.querySelector('[role="feed"]') || doc.querySelector('[role="main"]') || doc.createElement('div')).querySelectorAll('[aria-label],[role="progressbar"]')].filter(e =>
     (/^(Ładowanie|Loading)(?:[.…\s]|$)/i.test(e.getAttribute('aria-label') || '') || e.getAttribute('role') === 'progressbar') &&
     !e.closest('[data-pagelet^="FeedUnit_"],[data-fbu-hidden],[data-fbu-ui-hidden],[role="dialog"]'));
@@ -19,7 +20,7 @@
         .count{position:relative;font-size:10px;line-height:14px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--secondary-text,#65676b)}
         @keyframes spin{to{transform:rotate(360deg)}}
         @media(prefers-reduced-motion:reduce){.orbit{animation:none}}
-      </style><div class="loader" role="status" aria-label="Ładowanie postów"><div class="orbit" aria-hidden="true"></div><span class="count" aria-hidden="true">0</span></div>`;
+      </style><div class="loader" role="status" aria-label="Loading posts"><div class="orbit" aria-hidden="true"></div><span class="count" aria-hidden="true">0</span></div>`;
       counter = shadow.querySelector('.count');
       status = shadow.querySelector('[role="status"]');
       doc.body.append(host);
@@ -45,9 +46,10 @@
         const busy = configured && pending && now() - lastProgress < 20000;
         if (!pending) { restore(); if (host) host.hidden = true; return false; }
         mount();
+        host.lang = I.language;
         const count = String(loaded);
         if (counter.textContent !== count) counter.textContent = count;
-        status.setAttribute('aria-label', `Ładowanie postów. Załadowane posty: ${count}`);
+        status.setAttribute('aria-label', t('loaded', { count }));
         host.hidden = !busy; host.toggleAttribute('data-idle', !busy);
         const feed = doc.querySelector('[role="feed"]');
         const reference = nearby || units.find(e => !e.hasAttribute('data-fbu-hidden')) || feed;

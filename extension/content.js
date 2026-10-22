@@ -1,6 +1,7 @@
 (() => {
   'use strict';
   const C = globalThis.FBUnhook;
+  const I = globalThis.FBUnhookI18n, t = I.t;
   const layout = globalThis.FBUnhookLayout.create(document);
   let state = { ...C.DEFAULTS }, tabId, timer, panel, view, syncing = false, dead = false;
   let stats = { shown: 0, hidden: 0, route: C.route(location.pathname) };
@@ -33,14 +34,14 @@
   function panelUI() {
     if (panel?.isConnected) return;
     panel = document.createElement('aside');
-    panel.id = 'facebook-unhook-panel';
+    panel.id = 'facebook-unhook-panel'; panel.lang = I.language;
     const shadow = panel.attachShadow({ mode: 'closed' });
     shadow.innerHTML = `<style>
       :host{position:fixed;z-index:10;font-family:Segoe UI,system-ui,sans-serif;color:var(--primary-text,#1c1e21)}:host([hidden]){display:none!important}
       section{box-sizing:border-box;padding:12px 14px;border-radius:10px;background:var(--card-background,#fff);border:1px solid var(--divider,#dddfe2);font-size:11px;line-height:1.5}
       header{display:flex;align-items:center;gap:8px}.logo{width:24px;height:24px;display:grid;place-items:center;background:var(--primary-button-background,#0866ff);color:white;border-radius:7px;font-size:19px;font-weight:700}strong{font-size:13px}small,p{color:var(--secondary-text,#65676b)}small{display:block}p{margin:10px 0 8px}.stats{display:flex;gap:12px;margin:8px 0;color:var(--secondary-text,#65676b)}b{color:var(--primary-text,#1c1e21);font-variant-numeric:tabular-nums}a{color:var(--primary-text,#1c1e21);text-decoration:none;font-size:11px}a:hover{text-decoration:underline}a:focus-visible{outline:2px solid #0866ff;outline-offset:2px}
-    </style><section aria-label="Facebook Unhook"><header><span class="logo" aria-hidden="true">u</span><div><strong>Facebook Unhook</strong><small id="group-count"></small></div></header><div class="stats"><span><b id="shown">0</b> widocznych</span><span><b id="hidden">0</b> ukrytych</span></div><a href="https://www.facebook.com/groups/feed/">Aktualności grup ↗</a></section>`;
-    view = Object.fromEntries(['group-count', 'shown', 'hidden'].map(id => [id, shadow.getElementById(id)]));
+    </style><section aria-label="Facebook Unhook"><header><span class="logo" aria-hidden="true">u</span><div><strong>Facebook Unhook</strong><small id="group-count"></small></div></header><div class="stats"><span><b id="shown">0</b> <span id="shown-label"></span></span><span><b id="hidden">0</b> <span id="hidden-label"></span></span></div><a id="group-feed" href="https://www.facebook.com/groups/feed/"></a></section>`;
+    view = Object.fromEntries(['group-count', 'shown', 'hidden', 'shown-label', 'hidden-label', 'group-feed'].map(id => [id, shadow.getElementById(id)]));
     document.body.append(panel);
   }
   function updatePanel(sidebar, kind) {
@@ -54,13 +55,16 @@
     panel.style.maxHeight = `${Math.max(200, innerHeight - Math.max(72, rect.top + 16) - 16)}px`;
     panel.style.overflowY = 'auto';
     const values = {
-      'group-count': `${state.groups.filter(g => C.groupEnabled(g, state.disabledGroups)).length} z ${state.groups.length} grup włączonych`,
+      'group-count': t('groupCount', { enabled: state.groups.filter(g => C.groupEnabled(g, state.disabledGroups)).length, total: state.groups.length }),
+      'shown-label': t('shown'), 'hidden-label': t('hidden'), 'group-feed': t('groupFeed'),
       shown: String(stats.shown), hidden: String(stats.hidden)
     };
     for (const [key, value] of Object.entries(values)) if (view[key].textContent !== value) view[key].textContent = value;
   }
   function refresh() {
     if (dead || !document?.body) return;
+    I.setLanguage(state.language);
+    if (panel) panel.lang = I.language;
     const kind = C.route(location.pathname);
     const ui = layout.apply(state);
     const filtering = active() && kind === 'feed';

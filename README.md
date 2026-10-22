@@ -1,4 +1,4 @@
-# Facebook Unhook — Edge, wersja 0.7.1
+# Facebook Unhook — Edge, wersja 0.7.2
 
 Rozszerzenie pozostawia w głównych aktualnościach Facebooka i w feedzie grup tylko posty pochodzące z zapisanych grup. Menu jest po polsku. Dane są przechowywane wyłącznie w `chrome.storage.local`; rozszerzenie nie ma serwera, analityki, dostępu do haseł ani uprawnień do innych domen.
 
@@ -63,3 +63,7 @@ Po zmianie kodu kliknij **Załaduj ponownie** na karcie rozszerzenia w Edge, a n
 ## Publikacja
 
 Materiały, instrukcja zgłoszenia i lista pozostałych kroków: [store/README.md](store/README.md). Pakiet sklepu buduje `npm run package`; wynik trafia do `dist/`. Kod jest przechowywany w prywatnym repozytorium. Rozszerzenie pozostaje bezpłatne, bez wpłat i funkcji Premium.
+
+### Język interfejsu
+
+Ikona globu w menu pozwala wybrać English, Polski lub Automatycznie. Domyślnie używany jest język interfejsu przeglądarki (`chrome.i18n.getUILanguage()`): polski dla `pl`, angielski dla pozostałych języków. Ręczny wybór zapisuje się lokalnie; zmienia menu, panel Facebook Unhook i kontrolki postów bez ponownego odczytu grup. Nie zmienia języka Facebooka. Polityka i pomoc są dostępne w obu językach. Kontakt: jsnetic@outlook.com.

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extensionName__",
-  "version": "0.7.1",
-  "default_locale": "pl",
+  "version": "0.7.2",
+  "default_locale": "en",
   "description": "__MSG_extensionDescription__",
   "permissions": [
     "storage"
@@ -36,6 +36,7 @@
         "https://www.facebook.com/*"
       ],
       "js": [
+        "i18n.js",
         "core.js",
         "layout.js",
         "post-controls.js",

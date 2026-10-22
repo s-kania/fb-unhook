@@ -1,4 +1,4 @@
-importScripts('core.js');
+importScripts('core.js', 'i18n.js');
 // Retire the old background navigation job without touching memberships or preferences.
 let queue = chrome.storage.local.set({ resolver: null, aliasSummary: null });
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -9,11 +9,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 async function handle(message, sender) {
   const state = { ...FBUnhook.DEFAULTS, ...await chrome.storage.local.get(null) };
+  FBUnhookI18n.setLanguage(state.language);
+  const failure = errorKey => ({ error: FBUnhookI18n.t(errorKey), errorKey });
   const fromPopup = !sender.tab && sender.url === chrome.runtime.getURL('popup.html');
   const fromFacebook = !!sender.tab && /^https:\/\/www\.facebook\.com\//.test(sender.url || '');
   if (message.type === 'group-visibility' && (fromPopup || fromFacebook)) {
     const group = state.groups.find(g => g.id === message.id);
-    if (!group || typeof message.visible !== 'boolean') return { error: 'Nieznana grupa lub niepoprawne ustawienie.' };
+    if (!group || typeof message.visible !== 'boolean') return failure('unknownGroup');
     const keys = [group.id, ...(group.aliases || [])];
     const disabled = new Set(state.disabledGroups);
     for (const key of keys) { if (message.visible) disabled.delete(key); else disabled.add(key); }
@@ -22,6 +24,10 @@ async function handle(message, sender) {
   }
   if (message.type === 'settings' && fromPopup) {
     const patch = {};
+    if (Object.hasOwn(message, 'language')) {
+      if (!['auto', 'pl', 'en'].includes(message.language)) return failure('invalidLanguage');
+      patch.language = message.language;
+    }
     for (const key of FBUnhook.SETTINGS) if (typeof message[key] === 'boolean') patch[key] = message[key];
     await chrome.storage.local.set(patch);
     return { ok: true };
@@ -64,7 +70,7 @@ async function handle(message, sender) {
   }
   if (message.type === 'add-group' && fromPopup) {
     const id = FBUnhook.groupKey(message.url);
-    if (!id) throw new Error('Wklej poprawny link do grupy na Facebooku.');
+    if (!id) return failure('invalidUrl');
     const groups = state.groups.filter(g => g.id !== id);
     groups.push({ id, name: String(message.name || id).trim().slice(0, 200), aliases: [] });
     await chrome.storage.local.set({ groups });
@@ -79,7 +85,7 @@ async function handle(message, sender) {
     const group = state.groups.find(g => g.id === message.id);
     const alias = typeof message.alias === 'string' && FBUnhook.groupKey('/groups/' + message.alias + '/');
     if (!group || !alias || alias !== message.alias ||
-        state.groups.some(g => g !== group && [g.id, ...(g.aliases || [])].includes(alias))) return { error: 'Nieznana lub niejednoznaczna grupa.' };
+        state.groups.some(g => g !== group && [g.id, ...(g.aliases || [])].includes(alias))) return failure('ambiguousGroup');
     if ([group.id, ...(group.aliases || [])].includes(alias)) return { ok: true };
     const disabledGroups = FBUnhook.groupEnabled(group, state.disabledGroups) ? state.disabledGroups : [...new Set([...state.disabledGroups, alias])];
     await chrome.storage.local.set({
@@ -88,7 +94,7 @@ async function handle(message, sender) {
     });
     return { ok: true };
   }
-  return { error: 'Nieobsługiwane polecenie.' };
+  return failure('unsupportedCommand');
 }
 chrome.tabs.onRemoved.addListener(tabId => {
   queue = queue.catch(() => {}).then(async () => {

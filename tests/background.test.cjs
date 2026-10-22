@@ -8,7 +8,7 @@ function worker(initial = {}) {
   const data = structuredClone(initial);
   const opened = [], navigated = [];
   const chrome = { runtime: { getURL: path => 'chrome-extension://test/' + path, onMessage: { addListener: fn => { listener = fn; } } }, storage: { local: { get: async () => structuredClone(data), set: async patch => Object.assign(data, structuredClone(patch)) } }, tabs: { create: async args => { opened.push(args); return { id: 7 }; }, update: async (...args) => { navigated.push(args); }, remove: async () => {}, onRemoved: { addListener() {} } } };
-  vm.runInNewContext(fs.readFileSync(require.resolve('../extension/background.js'), 'utf8'), { chrome, URL, FBUnhook: C, importScripts() {}, console, setTimeout: () => 1, clearTimeout() {} });
+  vm.runInNewContext(fs.readFileSync(require.resolve('../extension/background.js'), 'utf8'), { chrome, URL, FBUnhook: C, FBUnhookI18n: require('../extension/i18n.js'), importScripts() {}, console, setTimeout: () => 1, clearTimeout() {} });
   return { data, opened, navigated, send: (message, sender = { url: 'chrome-extension://test/popup.html' }) => new Promise(resolve => listener(message, sender, resolve)) };
 }
 test('partial synchronization preserves previous memberships', async () => {
@@ -104,4 +104,23 @@ test('missing numeric IDs, duplicate IDs and conflicting aliases cannot replace 
     await w.send({ type: 'sync-result', groups, total: groups.length, complete: true, done: true }, { tab: { id: 7 }, url: 'https://www.facebook.com/groups/joins/' });
     assert.equal(w.data.groups[0].id, 'old'); assert.equal(w.data.sync.status, 'partial');
   }
+});
+
+test('language preferences are validated, popup-only and preserve memberships and filter settings', async () => {
+  const initial = { enabled: false, groups: [{ id: '123', name: 'Group' }], disabledGroups: ['123'] };
+  const w = worker(initial);
+  for (const language of ['pl', 'en', 'auto']) {
+    assert.equal((await w.send({ type: 'settings', language })).ok, true);
+    assert.equal(w.data.language, language);
+  }
+  assert.ok((await w.send({ type: 'settings', language: 'fr', enabled: true })).error);
+  assert.ok((await w.send({ type: 'settings', language: 'pl' }, { tab: { id: 8 }, url: 'https://www.facebook.com/' })).error);
+  assert.equal(w.data.language, 'auto');
+  assert.equal(w.data.enabled, false);
+  assert.deepEqual(w.data.groups, initial.groups);
+  assert.deepEqual(w.data.disabledGroups, initial.disabledGroups);
+  await w.send({ type: 'settings', language: 'en' });
+  assert.equal((await w.send({ type: 'add-group', url: 'https://example.com/' })).error, 'Paste a valid Facebook group link.');
+  await w.send({ type: 'settings', language: 'pl' });
+  assert.match((await w.send({ type: 'add-group', url: 'https://example.com/' })).error, /Wklej poprawny/);
 });

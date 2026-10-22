@@ -1,4 +1,4 @@
-# Certification notes — Facebook Unhook 0.7.1
+# Certification notes — Facebook Unhook 0.7.2
 
 ## Purpose and environment
 
@@ -31,8 +31,12 @@ No remote code. All executed extension JavaScript/CSS is packaged. Facebook JSON
 
 ## Data usage form
 
-Disclose local access to website content, current Facebook route and joined-group membership data. The extension accesses personal data locally even though nothing is sent to the developer. Do not describe it as "accesses no data". Match the exact current Partner Center definitions when choosing the data-usage checkboxes; keep the declaration consistent with `site/privacy.html`. No sale, advertising, analytics, creditworthiness use or transfer to the publisher. A public privacy URL and a public support contact must be supplied before submission.
+Disclose local access to website content, current Facebook route and joined-group membership data. The extension accesses personal data locally even though nothing is sent to the developer. Do not describe it as "accesses no data". Match the exact current Partner Center definitions when choosing the data-usage checkboxes; keep the declaration consistent with `site/privacy.html`. No sale, advertising, analytics, creditworthiness use or transfer to the publisher. Support and privacy contact: jsnetic@outlook.com. A public privacy URL must still be supplied before submission.
 
 ## Validation scope
 
 See `docs/validation.md` for historical live Edge checks on the preceding filter version and `store/validation.md` for this release. Automated tests use synthetic data. A successful test run is not a Microsoft certification or a guarantee against future Facebook layout changes.
+
+## Language selection
+
+The globe button opens the language selector: Automatic (default), English and Polski. Automatic follows the browser UI language: Polish for pl, English otherwise. A manual selection is stored locally and updates the popup and already mounted extension controls on Facebook. It does not change Facebook’s own language or membership data. Privacy/help is provided in both languages. Verify language persistence after closing and reopening the popup, and switching back to Automatic.
