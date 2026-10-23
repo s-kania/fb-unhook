@@ -35,7 +35,7 @@ Disclose local access to website content, current Facebook route and joined-grou
 
 ## Validation scope
 
-See `docs/validation.md` for historical live Edge checks on the preceding filter version and `store/validation.md` for this release. Automated tests use synthetic data. A successful test run is not a Microsoft certification or a guarantee against future Facebook layout changes.
+Automated tests use synthetic data. A successful test run is not a Microsoft certification or a guarantee against future Facebook layout changes.
 
 ## Language selection
 

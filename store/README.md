@@ -19,7 +19,6 @@ Wynik: `dist/facebook-unhook-0.7.2-edge.zip` i plik SHA-256. ZIP zawiera `manife
 - `reviewer-notes.md`: angielskie instrukcje dla certyfikacji, uprawnienia i opis przetwarzania danych.
 - `assets/`: logo i opcjonalne kafelki promocyjne. Są to grafiki promocyjne, nie zrzuty działającego Facebooka.
 - `site/privacy.html`, `site/privacy-en.html` i `site/privacy.css`: gotowa statyczna polityka prywatności i instrukcja obsługi, bez zewnętrznych skryptów i trackerów. Treść odpowiada stronie dołączonej do rozszerzenia.
-- `validation.md`: zakres wykonanych kontroli wydania.
 
 ## Pozostałe kroki przed wysłaniem do sklepu
 
@@ -38,4 +37,4 @@ Instalacja sklepowa może mieć inny identyfikator niż obecna rozpakowana kopia
 - https://learn.microsoft.com/en-us/microsoft-edge/extensions/publish/create-dev-account
 - https://learn.microsoft.com/en-us/legal/microsoft-edge/extensions/developer-policies
 
-Logo: minimum 128×128, zalecane 300×300; kafelki opcjonalne: 440×280 i 1400×560. Zrzuty opcjonalne: 640×480 lub 1280×800. Stary `docs/menu-preview.png` pokazuje historyczne menu z usuniętą pauzą i nie jest materiałem sklepowym.
+Logo: minimum 128×128, zalecane 300×300; kafelki opcjonalne: 440×280 i 1400×560. Zrzuty opcjonalne: 640×480 lub 1280×800.

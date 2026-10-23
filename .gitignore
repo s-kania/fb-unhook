@@ -11,5 +11,3 @@ dist/
 coverage/
 playwright-report/
 test-results/
-# Historic local preview, not a current store screenshot.
-docs/menu-preview.png
