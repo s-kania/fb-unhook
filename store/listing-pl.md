@@ -1,31 +1,33 @@
-# Materiały do Microsoft Edge Add-ons
+# Microsoft Edge Add-ons — polski opis
 
 ## Nazwa
+
 Facebook Unhook
 
 ## Krótki opis
-Uporządkuj Facebooka: filtruj aktualności według swoich grup, ukrywaj rolki, relacje i zbędne elementy strony.
+
+Filtrowanie aktualności Facebooka według swoich grup oraz ukrywanie rolek, relacji i wybranych elementów strony.
 
 ## Opis do sklepu
 
-Mniej rozpraszaczy, więcej miejsca na Twoje grupy. Facebook Unhook pozwala uporządkować komputerowy widok Facebooka w Microsoft Edge.
+Facebook Unhook pozwala ograniczyć rozpraszające treści i elementy interfejsu Facebooka w Microsoft Edge.
 
-Wybierz, co chcesz widzieć:
-• W głównych aktualnościach i aktualnościach grup pozostawiaj tylko posty z zapisanej listy swoich grup.
-• Wyłączaj posty z konkretnych grup w menu albo przełącznikiem obok posta. Nie zmienia to członkostwa w grupie.
-• Ukrywaj rolki, relacje i pasek tworzenia posta.
-• Ukrywaj lewy panel, skróty, sekcję kontaktów i pływający przycisk nowej wiadomości.
-• Uprość główną nawigację do Strony głównej i Marketplace.
+Funkcje:
 
-Po instalacji odśwież Facebooka. Otwórz menu rozszerzenia i odczytaj listę grup. Rozszerzenie otworzy widok „Twoje grupy” i przewinie listę; nie odwiedza osobno każdej grupy. Przed pierwszym odczytem filtr grup ukrywa rozpoznane posty. Możesz w dowolnym momencie wyłączyć filtr, aby przywrócić ich widoczność.
+- Filtrowanie aktualności tak, aby wyświetlały tylko posty z grup, do których należy użytkownik.
+- Ukrywanie postów z wybranych grup — w menu rozszerzenia lub przełącznikiem przy poście, bez opuszczania grupy.
+- Ukrywanie rolek, relacji i paska tworzenia posta.
+- Ukrywanie lewego panelu, skrótów, kontaktów wraz z ich menu oraz przycisku nowej wiadomości.
+- Ograniczenie górnej nawigacji do Strony głównej i Marketplace.
+- Menu w języku polskim i angielskim, z automatycznym lub ręcznym wyborem języka.
 
-Prywatność: ustawienia, nazwy i identyfikatory grup są zapisane lokalnie w profilu Microsoft Edge. Rozszerzenie analizuje elementy strony oraz dane członkostwa dostarczane przez Facebooka. Nie przesyła ich wydawcy. Nie ma analityki, reklam, płatności ani konta Premium. Wszystkie funkcje są darmowe.
+Lista grup jest odczytywana ze strony „Twoje grupy”. Ustawienia i lista są przechowywane lokalnie w przeglądarce i nie są przesyłane wydawcy. Rozszerzenie nie ma analityki. Każdą funkcję można włączyć lub wyłączyć osobno.
 
-Menu jest dostępne po polsku i angielsku. Domyślnie dopasowuje się do języka przeglądarki (angielski dla pozostałych języków); ikoną globu można zmienić wybór. Rozpoznawanie interfejsu Facebooka obsługuje język polski i angielski. Rozszerzenie działa na www.facebook.com w przeglądarce komputerowej. Filtr postów działa w aktualnościach, nie na stronach pojedynczych grup, profilach, Messengerze czy Marketplace. Pokazuje tylko posty załadowane przez Facebooka, bez gwarancji kompletności lub chronologii.
+Rozszerzenie obsługuje komputerową wersję Facebooka z polskim lub angielskim interfejsem. Filtr grup działa w aktualnościach i obejmuje posty załadowane przez Facebooka. Przed pierwszym pełnym odczytem grup filtr ukrywa rozpoznane posty; wyłącz „Tylko moje grupy”, aby je przywrócić. Odśwież listę po zmianie konta Facebooka, dołączeniu do grupy lub jej opuszczeniu. Niekompletna aktualizacja zachowuje poprzednią listę.
 
-Po zmianie konta Facebooka, dołączeniu do grupy lub jej opuszczeniu odśwież listę. Jest ona przypisana do profilu przeglądarki. Zmiany Facebooka mogą wymagać aktualizacji rozszerzenia. W razie problemów wszystkie opcje można wyłączyć.
+Filtr postów nie działa na stronach pojedynczych grup, profilach, w Messengerze ani Marketplace. Nie gwarantuje kompletnej ani chronologicznej listy postów. Zmiany Facebooka mogą wymagać aktualizacji rozszerzenia.
 
-Niezależny projekt. Nie jest produktem Meta/Facebooka ani twórców rozszerzenia Unhook dla YouTube i nie jest z nimi powiązany.
+Wszystkie funkcje są bezpłatne. Niezależne rozszerzenie, niepowiązane z Meta/Facebookiem ani Unhook dla YouTube.
 
 ## Pozostałe pola
 
@@ -33,9 +35,9 @@ Niezależny projekt. Nie jest produktem Meta/Facebooka ani twórców rozszerzeni
 - Kategoria: produktywność / Productivity.
 - Wydawca: Stefan Kania (zgodnie z kontem Partner Center).
 - Słowa kluczowe: Facebook; grupy; aktualności; koncentracja; rolki; relacje; produktywność.
-- Cena: bezpłatne; brak zakupów w aplikacji i linków wsparcia.
+- Cena: bezpłatne; brak zakupów w aplikacji i linków do wpłat.
 - Logo: `assets/logo-300.png`.
 - Opcjonalne kafelki: `assets/promo-small-440x280.png`, `assets/promo-large-1400x560.png`.
 - E-mail pomocy: jsnetic@outlook.com.
-- Publiczny URL polityki prywatności: do ustalenia przed zgłoszeniem. Gotowe pliki są w `site/`. Link do prywatnego repozytorium nie jest publiczną polityką.
-- Widoczność: ustalić przy zgłoszeniu; kod źródłowy w GitHub pozostaje prywatny niezależnie od widoczności w sklepie.
+- Polityka prywatności: [polska](https://brickfiction.pl/facebook-unhook/privacy/) i [angielska](https://brickfiction.pl/en/facebook-unhook/privacy/); w formularzu zgłoszenia podano wersję angielską.
+- Widoczność wybrana przy zgłoszeniu 22.10.2026: Public; zobacz [zapis zgłoszenia](submission-2026-10-22.md).

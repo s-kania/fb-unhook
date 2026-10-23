@@ -1,37 +1,42 @@
 # Microsoft Edge Add-ons — English listing
 
 ## Name
+
 Facebook Unhook
 
 ## Short description
-Clean up Facebook: filter your feed by your groups, hide reels, stories and distracting interface elements.
+
+Filter Facebook feeds by joined groups and hide reels, stories and selected interface elements.
 
 ## Store description
-Less distraction, more room for your groups. Facebook Unhook helps you tidy up the desktop version of Facebook in Microsoft Edge.
 
-Choose what you see:
-• Keep only posts from your saved list of joined groups in Home and Groups feeds.
-• Hide posts from individual groups using the menu or the switch beside a post. Your membership stays unchanged.
-• Hide reels, stories and the post composer.
-• Hide the left sidebar, shortcuts, contacts section and floating new-message button.
-• Simplify the main navigation to Home and Marketplace.
+Facebook Unhook reduces distracting content and interface elements on Facebook in Microsoft Edge.
 
-After installation, reload Facebook, open the extension menu and read your group list. The extension opens and scrolls “Your groups”; it does not visit each group separately. Before the first successful read, the group filter hides recognized posts. You can turn the filter off at any time to restore them.
+Features:
 
-Privacy: settings, group names and identifiers are stored locally in your Microsoft Edge profile. The extension analyzes page elements and membership data supplied by Facebook. It does not send them to the publisher. No analytics, ads, payments or Premium account. All features are free.
+- Filter feeds to show only posts from groups the user has joined.
+- Hide posts from selected groups through the extension menu or a switch beside a post, without leaving the group.
+- Hide reels, stories and the post composer.
+- Hide the left sidebar, shortcuts, contacts and their menu, and the new-message button.
+- Limit the top navigation to Home and Marketplace.
+- English and Polish menus with automatic or manual language selection.
 
-The menu supports English and Polish. Automatic mode follows your browser’s interface language, with English as the fallback; use the globe icon to choose manually. Facebook interface detection supports English and Polish. The extension works on desktop www.facebook.com. Post filtering runs in feeds, not on individual group pages, profiles, Messenger or Marketplace. It only filters posts loaded by Facebook, with no guarantee of completeness or chronological order.
+The group list is read from “Your groups”. Settings and the list are stored locally in the browser and are not sent to the publisher. The extension does not use analytics. Each feature can be turned on or off separately.
 
-Refresh your group list after switching Facebook accounts or joining or leaving groups. The list belongs to your browser profile. Facebook changes may require an extension update. All features can be turned off if needed.
+The extension supports desktop Facebook with an English or Polish interface. Group filtering works in feeds and applies to posts loaded by Facebook. Before the first successful group read, the filter hides recognized posts; turn off “Only my groups” to restore them. Refresh the list after switching Facebook accounts or joining or leaving groups. An incomplete refresh keeps the previous list.
 
-Independent project. Not affiliated with Meta/Facebook or the creators of Unhook for YouTube.
+Post filtering does not run on individual group pages, profiles, Messenger or Marketplace. It does not guarantee a complete or chronological feed. Changes to Facebook may require an extension update.
+
+All features are free. An independent extension, not affiliated with Meta/Facebook or Unhook for YouTube.
 
 ## Other fields
+
 - Languages: English (`en`) and Polish (`pl`).
 - Category: Productivity.
 - Publisher: Stefan Kania, subject to the registered Partner Center account.
 - Keywords: Facebook; groups; feed; focus; reels; stories; productivity.
 - Price: free; no in-app purchases or donation links.
 - Support: jsnetic@outlook.com.
-- Public privacy URL: deploy `site/privacy-en.html` with the other `site/` files before submission.
+- Public privacy URL: [English privacy policy](https://brickfiction.pl/en/facebook-unhook/privacy/).
+- Visibility selected for the 2026-10-22 submission: Public; see [submission record](submission-2026-10-22.md).
 - Store graphics: shared logo and optional Polish promotional tiles in `assets/`; use the logo alone for the English listing until English promotional artwork is prepared.
